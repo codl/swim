@@ -1,7 +1,25 @@
-var canvas;
-var context;
+var onloadhandlers = [];
+function registeronload(f){
+    if(!f) throw "you suck";
+    if(!window.onload){
+        window.onload = function(){
+            for(var i = 0; i < onloadhandlers.length; i++)
+                onloadhandlers[i]();
+        };
+    }
+    onloadhandlers.push(f);
+}
 
-window.onload = function(){
+function step(){
+    // here goes everything that must execute each frame
+    player.step();
+    viewport.update();
+    // render();
+}
+
+var canvas, context;
+
+registeronload(function(){
     var game = document.getElementById("game");
     var nojs = game.firstChild;
     game.removeChild(nojs);
@@ -10,7 +28,9 @@ window.onload = function(){
     canvas.width=640;
     canvas.height=480;
     context = canvas.getContext("2d");
-}
+    // load assets, progress bar?
+    window.setInterval(step, 1000/60);
+})
 
 function draw_test_tile() {
     //draw test tile.
@@ -55,3 +75,4 @@ var viewport = {
         }
     }
 }
+
