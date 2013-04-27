@@ -16,15 +16,6 @@ function step(){
     player.step();
     viewport.update();
     // render();
-    context.clearRect(0, 0, 500, 70);
-    context.fillText("x: " + viewport.x, 0, 10);
-    context.fillText("y: " + viewport.y, 0, 20);
-    context.fillText("pvx: " + viewport.pvx, 0, 30);
-    context.fillText("pvy: " + viewport.pvy, 0, 40);
-    context.fillText("dx: " + window.dx, 0, 50);
-    context.fillText("dy: " + window.dy, 0, 60);
-    context.fillText("x: " + player.x, 200, 10);
-    context.fillText("y: " + player.y, 200, 20);
     realcontext.clearRect(0, 0, canvas.width, canvas.height);
     realcontext.drawImage(buffer, 0, 0);
 }
@@ -85,23 +76,6 @@ var viewport = {
             window.dy = d;
             viewport.y += 0.1 * d;
         }
-        /*
-        if (viewport.pvx <= -canvas.width/4) {
-            // nudge viewport <-
-            viewport.x -= (viewport.pvx - canvas.width/4) * 0.1;
-        } else if (viewport.pvx >= canvas.width/4) {
-            // nudge viepowrt ->
-            viewport.x += (viewport.pvx + canvas.width/4) * 0.1;
-        }
-
-        if (viewport.pvy <= -canvas.height/4) {
-            // nudge viewport ^
-            viewport.y -= (viewport.pvy - canvas.height/4) * 0.1;
-        } else if (viewport.pvy >= canvas.height/4) {
-            // nudge viewport v
-            viewport.y += (viewport.pvy + canvas.height/4) * 0.1;
-        }
-        */
         draw_test_tile();
     }
 }
