@@ -1,7 +1,10 @@
 window.onload = function(){
-    var nojs = document.getElementById("nojs");
-    nojs.parentElement.removeChild(nojs);
+    var game = document.getElementById("game");
+    var nojs = game.firstChild;
+    game.removeChild(nojs);
     var canvas = document.createElement("canvas");
-    document.body.appendChild(canvas);
+    game.appendChild(canvas);
+    canvas.width=640;
+    canvas.height=480;
     // do shit
 }
