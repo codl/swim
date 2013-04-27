@@ -27,7 +27,7 @@ var player = {
         // gravity
         player.yv += 0.02 / (1 + Math.abs(player.xv));
         // note : inversely proportional to horizontal movement to simulate "gliding"
-        context.fillRect(player.x-2, player.y-2, 5, 5);
+        context.fillRect(player.x - viewport.x -2, player.y - viewport.y -2, 5, 5);
         //console.log(player.x, player.y, player.xv, player.yv, player.xa, player.ya);
     },
     keyup: function(e){
