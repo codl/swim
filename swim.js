@@ -23,8 +23,8 @@ function step(){
     context.fillStyle = "black";
     context.fillRect(0, 0, canvas.width, canvas.height);
     map.render();
-    player.render();
-
+//    player.render();
+    render_sprites();
     // write buffer to canvas
     realcontext.drawImage(buffer, 0, 0);
 }
@@ -59,6 +59,8 @@ registeronload(function(){
     realcontext = canvas.getContext("2d");
     context = buffer.getContext("2d");
     // load assets, progress bar?
+    // load player here during test.
+    player.init();
     map.onready = function(){
         window.setInterval(step, 1000/60);
     }
@@ -95,4 +97,17 @@ var viewport = {
         viewport.x = Math.floor(viewport.x);
         viewport.y = Math.floor(viewport.y);
     }
+}
+
+var frame_counter = 0;
+
+function render_sprites() {
+    player.render(); // render player.
+
+    // fetch list of active sprites, render them accordingly.
+    frame_counter++;
+}
+
+function flip(sprite_canvas) {
+    sprite_canvas.getContext("2d").scale(-1, 1);
 }

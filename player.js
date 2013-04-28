@@ -11,6 +11,16 @@ var player = {
         right: false,
         down: false
     },
+    init: function(){
+        pSide = new Image();
+        pSide.src = "art/SIDE.png";
+        pUp = new Image();
+        pUp.src = "art/UP.png";
+        pDown = new Image();
+        pDown.src = "art/DOWN.png"
+        pIdle = new Image();
+        pIdle.src = "art/IDLE.png"
+    },
     step: function(){
         with(player.directions){
             //console.log(player.directions);
@@ -28,12 +38,18 @@ var player = {
         player.yv += 0.02 / (1 + Math.abs(player.xv));
         // note : inversely proportional to horizontal movement to simulate "gliding"
     },
-    render: function(){
-        context.fillStyle = "white";
-        context.fillRect(player.x - viewport.x -2, player.y - viewport.y -2, 5, 5);
-        context.fillStyle = "black";
-        context.fillRect(player.x - viewport.x -1, player.y - viewport.y -1, 3, 3);
-        //console.log(player.x, player.y, player.xv, player.yv, player.xa, player.ya);
+    render: function(){ /* TODO: ADD DIRECTIONS */
+        if (player.directions.left === true) {
+            context.drawImage(pSide, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10);
+        } else if (player.directions.right === true) {
+            context.drawImage(pSide, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10);
+        } else if (player.directions.up === true) {
+            context.drawImage(pUp, (Math.floor(frame_counter / 4) % 4) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10);
+        } else if (player.directions.down === true) {
+            context.drawImage(pDown, (Math.floor(frame_counter / 4) % 6) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10);
+        } else {                                        // ( frame_c / 4 ) % frames ) * 15
+            context.drawImage(pIdle, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10);
+        }
     },
     keyup: function(e){
         switch(e.keyCode){
