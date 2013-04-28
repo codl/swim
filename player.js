@@ -1,6 +1,6 @@
 var player = {
-    x: 0,
-    y: 0,
+    x:  0,
+    y:  0,
     xv: 0, // xvelocity i.e. how many pixels do we move horizontally each frame
     yv: 0,
     xa: 0, // xacceleration i.e. how much we change xv every frame
@@ -31,6 +31,8 @@ var player = {
     render: function(){
         context.fillStyle = "white";
         context.fillRect(player.x - viewport.x -2, player.y - viewport.y -2, 5, 5);
+        context.fillStyle = "black";
+        context.fillRect(player.x - viewport.x -1, player.y - viewport.y -1, 3, 3);
         //console.log(player.x, player.y, player.xv, player.yv, player.xa, player.ya);
     },
     keyup: function(e){

@@ -3,11 +3,15 @@ function registeronload(f){
     if(!f) throw "you suck";
     if(!window.onload){
         window.onload = function(){
-            for(var i = 0; i < onloadhandlers.length; i++)
+            for(var i = onloadhandlers.length - 1; i >= 0; i--)
                 onloadhandlers[i]();
         };
     }
     onloadhandlers.push(f);
+}
+
+function linear(i, a1, b1, a2, b2){
+    return ((i - a1) * (b2 - a2) / (b1 - a1)) + a2;
 }
 
 function step(){
@@ -18,7 +22,7 @@ function step(){
     // render shit to the buffer
     context.fillStyle = "black";
     context.fillRect(0, 0, canvas.width, canvas.height);
-    viewport.render();
+    map.render();
     player.render();
 
     // write buffer to canvas
@@ -27,6 +31,19 @@ function step(){
 
 var canvas, realcontext;
 var buffer, context;
+
+function progress(pct, info){
+    realcontext.fillStyle = "black";
+    realcontext.fillRect(0, 0, canvas.width, canvas.height);
+    realcontext.fillStyle = "white";
+    realcontext.strokeStyle = "white";
+    realcontext.lineWidth = 1;
+    realcontext.strokeRect(10.5, 10.5, 99, 19);
+    realcontext.fillRect(12, 12, linear(pct, 0, 100, 0, 96), 16);
+    if(info){
+        realcontext.fillText(info, 10, 40);
+    }
+}
 
 registeronload(function(){
     var game = document.getElementById("game");
@@ -37,24 +54,16 @@ registeronload(function(){
     game.appendChild(canvas);
     canvas.width=640;
     canvas.height=480;
-    buffer.width=640;
-    buffer.height=480;
+    buffer.width=canvas.width;
+    buffer.height=canvas.height;
     realcontext = canvas.getContext("2d");
     context = buffer.getContext("2d");
     // load assets, progress bar?
-    window.setInterval(step, 1000/60);
-})
-
-var test_tile;
-function draw_test_tile() {
-    //load test tile
-    if(!test_tile){
-        test_tile = new Image();
-        test_tile.src = "art/test.png";
+    map.onready = function(){
+        window.setInterval(step, 1000/60);
     }
-    //draw test tile. nothing will be drawn if the tile has not been loaded yet
-    context.drawImage(test_tile, -viewport.x, -viewport.y);
-}
+    map.generate();
+})
 
 function sign(i){
     return i===0? 1 : i / Math.abs(i);
@@ -83,6 +92,7 @@ var viewport = {
             window.dy = d;
             viewport.y += 0.1 * d;
         }
-    },
-    render: draw_test_tile
+        viewport.x = Math.floor(viewport.x);
+        viewport.y = Math.floor(viewport.y);
+    }
 }
