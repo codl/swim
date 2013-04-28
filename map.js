@@ -15,12 +15,12 @@ var map = {
                     highest = y;
                 }
                 var v =
-                    map.perlin.noise(x/700, y/700, 0) +
-                    map.perlin.noise(x/400, y/400, 0)/2 +
-                    map.perlin.noise(x/80, y/80, 0)/3 +
-                    map.perlin.noise(x/3, y/3, 0)/5 +
+                    map.perlin.noise(x/900, y/900, 0)   +
+                    map.perlin.noise(x/250, y/250, 0) +
+                    map.perlin.noise(x/90, y/60, 0)/9 +
+                    map.perlin.noise(x/3, y/3, 0)/100 +
                     linear(y, 0, map.canvas.height, -1, 1) +
-                    Math.pow(linear(x, 0, map.canvas.width, -1, 1), 2)/2;
+                    Math.pow(linear(x, 0, map.canvas.width, -1, 1), 2);
                 var fill = v > 0;
                 if(fill){
                     map.context.fillRect(x, y, 1, 1);
@@ -30,24 +30,19 @@ var map = {
                     if(y < map.canvas.height - 1 && !seen[x   + (y+1) * width]){ seen[x   + (y+1) * width] = true; queue.push([x  , y+1]); }
                 }
             }
-            else { unsuccessful+= 1; }
             processed += 1;
             var job = queue.shift();
             if(job){
-                if(processed % 1000 === 0){
+                if(processed % 3000 === 0){
                     progress(linear(highest, map.canvas.height, 0, 0, 100), "Generating map, " + queue.length + " jobs...");
-                    realcontext.drawImage(map.canvas, 10, 50);
+                    realcontext.drawImage(map.canvas, 0, 0);
                     window.setTimeout(floodfill, 0, job[0], job[1]);
                 }
                 else
                     floodfill(job[0], job[1]);
             }
             else {
-                console.log("last job");
-                if(map.onready){
-                    map.onready();
-                    //map.onready = null;
-                }
+                if(map.onready) map.onready();
                 console.log("Time taken : " + (new Date() - time));
             }
         }
@@ -60,8 +55,8 @@ var map = {
 
 registeronload(function(){
     map.canvas = document.createElement("canvas");
-    map.canvas.height = 1000;
-    map.canvas.width = 2000;
+    map.canvas.height = 5000;
+    map.canvas.width = 5000;
     map.context = map.canvas.getContext("2d");
     map.imageData = map.context.getImageData(0, 0, map.canvas.height, map.canvas.width);
     map.perlin = new ClassicalNoise();
