@@ -40,15 +40,15 @@ var player = {
     },
     render: function(){ /* TODO: ADD DIRECTIONS */
         if (player.directions.left === true) {
-            context.drawImage(pSide, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10);
+            animate_sprite(pSide, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10, false);
         } else if (player.directions.right === true) {
-            context.drawImage(pSide, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10);
+            animate_sprite(pSide, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10, true);
         } else if (player.directions.up === true) {
-            context.drawImage(pUp, (Math.floor(frame_counter / 4) % 4) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10);
+            animate_sprite(pUp, (Math.floor(frame_counter / 4) % 4) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10, (sign(player.xv) === 1)? true : false);
         } else if (player.directions.down === true) {
-            context.drawImage(pDown, (Math.floor(frame_counter / 4) % 6) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10);
+            animate_sprite(pDown, (Math.floor(frame_counter / 4) % 6) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10, (sign(player.xv) === 1)? true : false);
         } else {                                        // ( frame_c / 4 ) % frames ) * 15
-            context.drawImage(pIdle, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10);
+            animate_sprite(pIdle, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10, (sign(player.xv) === 1)? true : false);
         }
     },
     keyup: function(e){

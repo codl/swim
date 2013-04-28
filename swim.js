@@ -22,7 +22,7 @@ function step(){
     // render shit to the buffer
     context.fillStyle = "black";
     context.fillRect(0, 0, canvas.width, canvas.height);
-    map.render();
+//  map.render();
 //    player.render();
     render_sprites();
     // write buffer to canvas
@@ -51,20 +51,26 @@ registeronload(function(){
     game.removeChild(nojs);
     canvas = document.createElement("canvas");
     buffer = document.createElement("canvas");
+    sprite_canvas = document.createElement("canvas");
     game.appendChild(canvas);
     canvas.width=640;
     canvas.height=480;
     buffer.width=canvas.width;
     buffer.height=canvas.height;
+    sprite_canvas.width=15;
+    sprite_canvas.height=10;
     realcontext = canvas.getContext("2d");
     context = buffer.getContext("2d");
+    sprite_context = sprite_canvas.getContext("2d");
+        //temp
+    sprite_context.scale(-1, 1);
     // load assets, progress bar?
     // load player here during test.
     player.init();
-    map.onready = function(){
+//  map.onready = function(){
         window.setInterval(step, 1000/60);
-    }
-    map.generate();
+//  }
+//  map.generate();
 })
 
 function sign(i){
@@ -108,6 +114,18 @@ function render_sprites() {
     frame_counter++;
 }
 
-function flip(sprite_canvas) {
-    sprite_canvas.getContext("2d").scale(-1, 1);
+//context.drawImage(pIdle, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10);
+function animate_sprite(image, sx, sy, swidth, sheight, x, y, width, height, flip) {
+    if (flip === true) {
+        if (sprite_canvas.width !== width && sprite_canvas.height !== height) {
+            sprite_canvas.width = width;
+            sprite_canvas.height = height;
+            console.log("changed size of Sprite_canvas.");
+        }
+        sprite_context.clearRect(-(width), 0, width, height);
+        sprite_context.drawImage(image, sx, sy, swidth, sheight, -(swidth), 0, width, height);
+        context.drawImage(sprite_canvas, x, y);
+    } else {
+        context.drawImage(image, sx, sy, swidth, sheight, x,  y, width, height);
+    }
 }
