@@ -12,11 +12,16 @@ function registeronload(f){
 
 function step(){
     // here goes everything that must execute each frame
-    //context.clearRect(0, 0, canvas.width, canvas.height);
     player.step();
-    viewport.update();
-    // render();
-    realcontext.clearRect(0, 0, canvas.width, canvas.height);
+    viewport.step();
+
+    // render shit to the buffer
+    context.fillStyle = "black";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    viewport.render();
+    player.render();
+
+    // write buffer to canvas
     realcontext.drawImage(buffer, 0, 0);
 }
 
@@ -40,13 +45,15 @@ registeronload(function(){
     window.setInterval(step, 1000/60);
 })
 
+var test_tile;
 function draw_test_tile() {
-    //draw test tile.
-    var img = new Image();
-    img.src = "art/test.png";
-    img.onload = function() {
-        context.drawImage(img, -viewport.x, -viewport.y);
-    };
+    //load test tile
+    if(!test_tile){
+        test_tile = new Image();
+        test_tile.src = "art/test.png";
+    }
+    //draw test tile. nothing will be drawn if the tile has not been loaded yet
+    context.drawImage(test_tile, -viewport.x, -viewport.y);
 }
 
 function sign(i){
@@ -54,12 +61,12 @@ function sign(i){
 }
 
 var viewport = {
-    x:   0, // in origin of viewport.
-    y:   0, // in origin of viewport.
+    x:   -250, // in origin of viewport.
+    y:   -140, // in origin of viewport.
     pvx: 0, // player position within viewport.
     pvy: 0,
     // methods.
-    update: function() {
+    step: function() {
         // this should track player movement.
         // update the position of the player INSIDE the
         // viewport, and adjust accordingly.
@@ -76,7 +83,6 @@ var viewport = {
             window.dy = d;
             viewport.y += 0.1 * d;
         }
-        draw_test_tile();
-    }
+    },
+    render: draw_test_tile
 }
-
