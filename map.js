@@ -1,58 +1,50 @@
 var map = {
     generate: function(){
         map.context.fillStyle = "white";
-        var data = map.imageData.data;
         var highest = map.canvas.height;
         var jobs = 0;
-        var unsuccessful = 0;
+        var processed = 0;
+        var time = new Date() - 0;
+        var queue = [];
+        var seen = Array(map.canvas.height * map.canvas.width);
+        var width = map.canvas.width;
         function floodfill(x, y){
-            if(x >= 0 && y >= 0 && x < map.canvas.width && y < map.canvas.height &&
-                    data[(x + y * map.canvas.width) * 4] !== 255){
+            if(x >= 0 && y >= 0 && x < map.canvas.width && y < map.canvas.height){
+                seen[x + y * width] = true;
                 if(y < highest){
                     highest = y;
                 }
-                progress(linear(highest, map.canvas.height, 0, 0, 100), "Generating map, " + jobs + " jobs...")
                 var v =
-                    map.perlin.noise(linear(x, 0, 70, 0, 1), linear(y, 0, 40, 0, 1), 0) +
-                    map.perlin.noise(linear(x, 0, 20, 0, 1), linear(y, 0, 20, 0, 1), 0) +
+                    map.perlin.noise(x/900, y/900, 0)   +
+                    map.perlin.noise(x/250, y/250, 0) +
+                    map.perlin.noise(x/90, y/60, 0)/9 +
+                    map.perlin.noise(x/3, y/3, 0)/100 +
                     linear(y, 0, map.canvas.height, -1, 1) +
-                    Math.abs(linear(x, 0, map.canvas.width, -1, 1));
+                    Math.pow(linear(x, 0, map.canvas.width, -1, 1), 2);
                 var fill = v > 0;
                 if(fill){
-                    data[(x + y * map.canvas.width) * 4]     = 255;
-                    data[(x + y * map.canvas.width) * 4 + 1] = 255;
-                    data[(x + y * map.canvas.width) * 4 + 2] = 255;
-                    data[(x + y * map.canvas.width) * 4 + 3] = 255;
-                    if(data[(x   + (y+1) * map.canvas.width) * 4] !== 255){
-                        jobs += 1;
-                        window.setTimeout(floodfill, 0, x  , y+1);
-                    }
-                    if(data[(x-1 + (y  ) * map.canvas.width) * 4] !== 255){
-                        jobs += 1;
-                        window.setTimeout(floodfill, 0, x-1, y  );
-                    }
-                    if(data[(x+1 + (y  ) * map.canvas.width) * 4] !== 255){
-                        jobs += 1;
-                        window.setTimeout(floodfill, 0, x+1, y  );
-                    }
-                    if(data[(x   + (y-1) * map.canvas.width) * 4] !== 255){
-                        jobs += 1;
-                        window.setTimeout(floodfill, 0, x  , y-1);
-                    }
-                } else
-                    data[(x + y * map.canvas.width) * 4] = 255; // transparent red, so the pixel will be skipped by other workers
+                    map.context.fillRect(x, y, 1, 1);
+                    if(y > 0                     && !seen[x   + (y-1) * width]){ seen[x   + (y-1) * width] = true; queue.push([x  , y-1]); }
+                    if(x < map.canvas.width - 1  && !seen[x+1 + (y  ) * width]){ seen[x+1 + (y  ) * width] = true; queue.push([x+1, y  ]); }
+                    if(x > 0                     && !seen[x-1 + (y  ) * width]){ seen[x-1 + (y  ) * width] = true; queue.push([x-1, y  ]); }
+                    if(y < map.canvas.height - 1 && !seen[x   + (y+1) * width]){ seen[x   + (y+1) * width] = true; queue.push([x  , y+1]); }
+                }
+            }
+            processed += 1;
+            var job = queue.shift();
+            if(job){
+                if(processed % 3000 === 0){
+                    progress(linear(highest, map.canvas.height, 0, 0, 100), "Generating map, " + queue.length + " jobs...");
+                    realcontext.drawImage(map.canvas, 0, 0);
+                    window.setTimeout(floodfill, 0, job[0], job[1]);
+                }
+                else
+                    floodfill(job[0], job[1]);
             }
             else {
-                fill = true;
-                unsuccessful += 1;
+                if(map.onready) map.onready();
+                console.log("Time taken : " + (new Date() - time));
             }
-            jobs -= 1;
-            if(jobs === 0){
-                map.context.putImageData(map.imageData, 0, 0);
-                map.onready();
-                // finalize
-            }
-            return fill;
         }
         floodfill(map.canvas.width / 2,map.canvas.height-1);
     },
@@ -63,8 +55,8 @@ var map = {
 
 registeronload(function(){
     map.canvas = document.createElement("canvas");
-    map.canvas.height = 500;
-    map.canvas.width = 500;
+    map.canvas.height = 5000;
+    map.canvas.width = 5000;
     map.context = map.canvas.getContext("2d");
     map.imageData = map.context.getImageData(0, 0, map.canvas.height, map.canvas.width);
     map.perlin = new ClassicalNoise();
