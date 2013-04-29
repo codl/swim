@@ -93,12 +93,12 @@ var viewport = {
         if(Math.abs(viewport.pvx) > canvas.width/4){
             var d = viewport.pvx - sign(viewport.pvx) * canvas.width/4; // distance from edge of scroll zone
             window.dx = d;
-            viewport.x += 0.1 * d;
+            viewport.x += 0.05 * d;
         }
         if(Math.abs(viewport.pvy) > canvas.height/4){
             var d = viewport.pvy - sign(viewport.pvy) * canvas.height/4; // distance from edge of scroll zone
             window.dy = d;
-            viewport.y += 0.1 * d;
+            viewport.y += 0.05 * d;
         }
         viewport.x = Math.floor(viewport.x);
         viewport.y = Math.floor(viewport.y);

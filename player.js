@@ -26,18 +26,17 @@ var player = {
     },
     step: function(){
         with(player.directions){
-            //console.log(player.directions);
-            player.xa = left? (right? 0 : -0.3) : (right? 0.3 : 0)
-            player.ya = up? (down? 0 : -0.3) : (down? 0.3 : 0)
+            player.xa = left? (right? 0 : -0.1) : (right? 0.1 : 0)
+            player.ya = up? (down? 0 : -0.1) : (down? 0.1 : 0)
         }
         player.realx += player.xv;
         player.realy += player.yv;
         player.xv += player.xa;
         player.yv += player.ya;
-        // friction
+        // ↓ friction
         player.xv *= 0.95;
         player.yv *= 0.95;
-        // gravity
+        // ↓ gravity
         player.yv += 0.02 / (1 + Math.abs(player.xv));
         // inversely proportional to horizontal movement to simulate "gliding"
 
