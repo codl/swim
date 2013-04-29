@@ -41,7 +41,7 @@ fish.Fish.prototype.step = function(){
     this.realy += this.yv;
     this.xv += this.xa;
     this.yv += this.ya;
-    this.xv *= 0.97; // fish are slippery
+    this.xv *= 0.99; // fish are slippery
     this.yv *= 0.90;
     this.xa *= 0.5;
     this.ya *= 0.5;
@@ -62,13 +62,13 @@ fish.Fish.prototype.step = function(){
         }
         if(neighbour_count != 0){
             this.xa += ((neighbour_xv / neighbour_count) - this.xv)/2;
-            this.ya += ((neighbour_yv / neighbour_count) - this.yv)/2;
+            this.ya += ((neighbour_yv / neighbour_count) - this.yv)/8;
         }
     }
     if(this.space_out <= 0){
         this.xa = linear(Math.random(), 0, 1, -1, 1);
         this.ya = linear(Math.random(), 0, 1, -1, 1);
-        this.space_out = Math.random() * 60 * ((this.follower)?120:10)
+        this.space_out = Math.random() * 60 * ((this.follower)?30:10)
     }
     this.space_out -= 1;
 
