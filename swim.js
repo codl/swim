@@ -23,8 +23,12 @@ function step(){
     // render shit to the buffer
     context.fillStyle = "black";
     context.fillRect(0, 0, canvas.width, canvas.height);
+    //placeholder surface
+    context.fillStyle = "#6be"
+    context.fillRect(0, 0 - viewport.y, canvas.width, 50);
     map.render();
     render_sprites();
+
     // write buffer to canvas
     realcontext.drawImage(buffer, 0, 0);
 }
