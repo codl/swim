@@ -57,7 +57,9 @@ var map = {
         context.drawImage(map.canvas, -viewport.x, -viewport.y);
     },
     collide: function(x, y){
-        return map.imageData.data[(x + y*map.width) * 4 + 1] === 255;
+        return x < 0 || x >= map.width ||
+            y < 0 || y >= map.height ||
+            map.imageData.data[(x + y*map.width) * 4 + 1] === 255;
     }
 }
 

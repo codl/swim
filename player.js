@@ -43,6 +43,12 @@ var player = {
         // prevent smoothing
         player.x = Math.floor(player.realx);
         player.y = Math.floor(player.realy);
+
+        // collision detection
+        if     (map.collide(player.x+1, player.y  )) { player.xv = 0; player.x-= 1; player.realx -= 1; }
+        else if(map.collide(player.x-1, player.y  )) { player.xv = 0; player.x+= 1; player.realx += 1; }
+        if     (map.collide(player.x  , player.y+1)) { player.yv = 0; player.y-= 1; player.realy -= 1; }
+        else if(map.collide(player.x  , player.y-1)) { player.yv = 0; player.y+= 1; player.realy += 1; }
     },
     render: function(){ /* TODO: ADD DIRECTIONS */
         if (player.directions.left === true) {                                                                  // ↓     centering the sprite    ↓
