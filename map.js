@@ -20,8 +20,10 @@ var map = {
                 map.perlin.noise(x/250, y/250, 0) +
                 map.perlin.noise(x/90, y/60, 0)/9 +
                 map.perlin.noise(x/3, y/3, 0)/100 +
-                linear(y, 0, map.canvas.height, -1, 1) +
-                Math.pow(linear(x, 0, map.width, -1, 1), 2);
+                linear(y, 0, map.canvas.height, -1, 1)*2 +
+                Math.pow(linear(x, 0, map.width, -1, 1), 6)
+                - 0.1
+                ;
             if(v > 0){
                 img.data[(x + y * width) * 4] = 255;
                 img.data[(x + y * width) * 4 + 1] = 255;
