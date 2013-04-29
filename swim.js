@@ -67,6 +67,7 @@ registeronload(function(){
     // load player here during test.
     player.init();
     map.onready = function(){
+        scenery.place(10);
         window.setInterval(step, 1000/60);
     }
     map.generate();
