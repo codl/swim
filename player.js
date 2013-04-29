@@ -1,6 +1,9 @@
+var pSide, pUp, pDown, pIdle;
 var player = {
-    x:  0,
-    y:  0,
+    realx: 0,
+    realy: 0,
+    x: 0,
+    y: 0,
     xv: 0, // xvelocity i.e. how many pixels do we move horizontally each frame
     yv: 0,
     xa: 0, // xacceleration i.e. how much we change xv every frame
@@ -27,8 +30,8 @@ var player = {
             player.xa = left? (right? 0 : -0.3) : (right? 0.3 : 0)
             player.ya = up? (down? 0 : -0.3) : (down? 0.3 : 0)
         }
-        player.x += player.xv;
-        player.y += player.yv;
+        player.realx += player.xv;
+        player.realy += player.yv;
         player.xv += player.xa;
         player.yv += player.ya;
         // friction
@@ -36,7 +39,11 @@ var player = {
         player.yv *= 0.95;
         // gravity
         player.yv += 0.02 / (1 + Math.abs(player.xv));
-        // note : inversely proportional to horizontal movement to simulate "gliding"
+        // inversely proportional to horizontal movement to simulate "gliding"
+
+        // prevent smoothing
+        player.x = Math.floor(player.realx);
+        player.y = Math.floor(player.realy);
     },
     render: function(){ /* TODO: ADD DIRECTIONS */
         if (player.directions.left === true) {
