@@ -33,7 +33,7 @@ var fish = {
 
 fish.Fish.prototype.render = function(){
     context.fillStyle = "white";
-    context.fillRect(this.x - viewport.x, this.y - viewport.y, 2, 1);
+    context.fillRect(this.x - viewport.x - 1, this.y - viewport.y, 3, 1);
 };
 
 fish.Fish.prototype.step = function(){
