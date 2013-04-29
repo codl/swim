@@ -5,7 +5,17 @@ body {
     font-family: monospace;
 }
 
-canvas {
+canvas, .nojs {
     background: black;
     border: 1px solid #666;
+    margin: 0 auto;
+}
+
+.nojs {
+    width: 640px;
+    line-height: 0; /* oh god that's so gross ew */
+    padding: 240px 0;
+    font-size: 0.7em;
+    font-family: sans-serif;
+    cursor: default;
 }
