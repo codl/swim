@@ -65,10 +65,12 @@ registeronload(function(){
     sprite_context.scale(-1, 1);
     // load assets, progress bar?
     // load player here during test.
-    player.init();
     map.onready = function(){
-        scenery.place(10);
-        window.setInterval(step, 1000/60);
+        scenery.onready = function(){
+            player.init();
+            window.setInterval(step, 1000/60);
+        }
+        scenery.place(40);
     }
     map.generate();
 })

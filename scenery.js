@@ -67,11 +67,17 @@ scenery = {
         if(count <= 0){
             console.log("Done placing scenery.");
             map.imageData = map.context.getImageData(0, 0, map.width, map.height);
-            // TODO màj imageData de la map
+            if(scenery.onready){
+                var f = scenery.onready;
+                scenery.onready = null;
+                f();
+            }
             return;
         }
 
         var filename = scenery.files[Math.floor(Math.random() * scenery.files.length)];
+
+        progress(98, "Placing scenery: " + filename + "...");
 
         var asset = scenery.assets[filename];
         if(!asset || asset.readyState !== 2){
@@ -79,29 +85,55 @@ scenery = {
             return;
         }
         var done = false;
-        var x, y;
-        while(!done){
-            x = Math.floor(Math.random() * (map.width - asset.image.width))
-            y = Math.floor(Math.random() * (map.height - asset.image.height))
+        var touched_water = false;
+        var touched_ground= false;
+        var x = Math.floor(Math.random() * map.width);
+        var y = Math.floor(Math.random() * map.height);
+        var tries = 0;
+        var f = function(){
+            tries += 1;
+            if(asset.anchors.length === 0){
+                console.error("This piece of scenery doesn't have any anchors: " + filename);
+                window.setTimeout(scenery.place, 0, count-1);
+            }
             var anchored = true
-            while(true){
-                for(var i = 0; anchored && i < asset.anchors.length; i++){
-                    if(!map.collide(x + asset.anchors[i][0], y + asset.anchors[i][1])) anchored = false;
-                }
-                if(anchored){
-                    done = true;
-                    y -= 1;
-                }
-                else{
-                    y += 1;
+            for(var i = 0; anchored && i < asset.anchors.length; i++){
+                if(!map.collide(x + asset.anchors[i][0], y + asset.anchors[i][1])){
+                    anchored = false;
                     break;
                 }
             }
+            if(touched_ground && touched_water){
+                done = true;
+                if(!anchored)
+                    y += 1;
+            }
+            else if(anchored){
+                touched_ground = true;
+                y -= 1;
+            }
+            else{
+                touched_water = true;
+                y += 1;
+            }
+            if(!done){
+                if(tries > map.height){
+                    console.warning("Giving up on " + filename);
+                    window.setTimeout(scenery.place, 0, count-1);
+                }
+                else if(tries % 1000 === 0){
+                    window.setTimeout(f, 0);
+                }
+                else
+                    f();
+                return;
+            }
+            else{
+                map.context.drawImage(asset.canvas, x, y);
+                window.setTimeout(scenery.place, 0, count-1);
+            }
         }
-
-        map.context.drawImage(asset.canvas, x, y);
-
-        window.setTimeout(scenery.place, 0, count-1);
+        f();
     }
 }
 
