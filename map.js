@@ -1,6 +1,6 @@
 var map = {
-    height:  1500,
-    width:  10000,
+    width: 10000,
+    height: 1500,
     generate: function(){
         map.context.fillStyle = "white";
         var rightmost = 0;

@@ -18,6 +18,7 @@ function step(){
     // here goes everything that must execute each frame
     player.step();
     viewport.step();
+    fish.step();
 
     // render shit to the buffer
     context.fillStyle = "black";
@@ -66,6 +67,7 @@ registeronload(function(){
     // load assets, progress bar?
     // load player here during test.
     map.onready = function(){
+        fish.spawn(700);
         scenery.onready = function(){
             player.init();
             window.setInterval(step, 1000/60);
@@ -112,7 +114,8 @@ var frame_counter = 0;
 function render_sprites() {
     player.render(); // render player.
 
-    // fetch list of active sprites, render them accordingly.
+    fish.render();
+
     frame_counter++;
 }
 
