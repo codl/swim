@@ -40,7 +40,7 @@ var map = {
             processed += 1;
             var job = queue.shift() || queue_right.shift();
             if(job){
-                if(processed % 1500 === 0){
+                if(processed % 1000 === 0){
                     progress(linear(rightmost, 0, map.width, 0, 95), "Generating map, " + (queue.length + queue_right.length) + " queued...");
                     window.setTimeout(floodfill, 0, job[0], job[1]);
                 }
