@@ -20,9 +20,9 @@ var player = {
         pUp = new Image();
         pUp.src = "art/UP.png";
         pDown = new Image();
-        pDown.src = "art/DOWN.png"
+        pDown.src = "art/DOWN.png";
         pIdle = new Image();
-        pIdle.src = "art/IDLE.png"
+        pIdle.src = "art/IDLE.png";
     },
     step: function(){
         with(player.directions){

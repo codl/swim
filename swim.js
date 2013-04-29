@@ -99,8 +99,8 @@ var viewport = {
             window.dy = d;
             viewport.y += 0.05 * d;
         }
-        viewport.x = Math.floor(viewport.x);
-        viewport.y = Math.floor(viewport.y);
+        viewport.x = (viewport.x < 0)?0:(viewport.x > map.width - canvas.width)?map.width-canvas.width:Math.floor(viewport.x);
+        viewport.y = (viewport.y < 0)?0:(viewport.y > map.height - canvas.height)?map.height-canvas.height:Math.floor(viewport.y);
     }
 }
 
