@@ -45,16 +45,16 @@ var player = {
         player.y = Math.floor(player.realy);
     },
     render: function(){ /* TODO: ADD DIRECTIONS */
-        if (player.directions.left === true) {
-            animate_sprite(pSide, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10, false);
+        if (player.directions.left === true) {                                                                  // ↓     centering the sprite    ↓
+            animate_sprite(pSide, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1 - 7, player.y - viewport.y -1 - 5, 15, 10, false);
         } else if (player.directions.right === true) {
-            animate_sprite(pSide, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10, true);
+            animate_sprite(pSide, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1 - 7, player.y - viewport.y -1 - 5, 15, 10, true);
         } else if (player.directions.up === true) {
-            animate_sprite(pUp, (Math.floor(frame_counter / 4) % 4) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10, (sign(player.xv) === 1)? true : false);
+            animate_sprite(pUp,   (Math.floor(frame_counter / 4) % 4) * 15, 0, 15, 10, player.x - viewport.x - 1 - 7, player.y - viewport.y -1 - 5, 15, 10, player.xv >= 0);
         } else if (player.directions.down === true) {
-            animate_sprite(pDown, (Math.floor(frame_counter / 4) % 6) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10, (sign(player.xv) === 1)? true : false);
+            animate_sprite(pDown, (Math.floor(frame_counter / 4) % 6) * 15, 0, 15, 10, player.x - viewport.x - 1 - 7, player.y - viewport.y -1 - 5, 15, 10, player.xv >= 0);
         } else {                                        // ( frame_c / 4 ) % frames ) * 15
-            animate_sprite(pIdle, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10, (sign(player.xv) === 1)? true : false);
+            animate_sprite(pIdle, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1 - 7, player.y - viewport.y -1 - 5, 15, 10, player.xv >= 0);
         }
     },
     keyup: function(e){
