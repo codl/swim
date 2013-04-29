@@ -1,6 +1,21 @@
 scenery = {
     files: [
-        "art/SHIP1.png"
+        "art/SHIP1.png",
+        "art/BRUSH0.png",
+        "art/BRUSH1.png",
+        "art/BRUSH2.png",
+        "art/BRUSH3.png",
+        "art/BRUSH4.png",
+        "art/BRUSH5.png",
+        "art/BRUSH6.png",
+        "art/BRUSH7.png",
+        "art/BRUSH8.png",
+        "art/BRUSH9.png",
+        "art/BRUSH10.png",
+        "art/BRUSH11.png",
+        "art/BRUSH12.png",
+        "art/BRUSH13.png",
+        "art/BRUSH14.png"
     ],
     assets: {},
     load: function(filename){
