@@ -14,6 +14,7 @@ var player = {
         right: false,
         down: false
     },
+    bubbles: [],
     init: function(){
         pSide = new Image();
         pSide.src = "art/SIDE.png";
@@ -49,8 +50,25 @@ var player = {
         else if(map.collide(player.x-1, player.y  )) { player.xv /= 1000; player.x+= 1; player.realx += 1; }
         if     (map.collide(player.x  , player.y+1)) { player.yv /= 1000; player.y-= 1; player.realy -= 1; }
         else if(map.collide(player.x  , player.y-1)) { player.yv /= 1000; player.y+= 1; player.realy += 1; }
+
+        for(var i = 0; i < player.bubbles.length; i++){
+            if(player.bubbles[i][1] < 50) continue;
+            if(Math.random() < 1/2)
+                player.bubbles[i][1] -= 1;
+            else if(Math.random() < 1/2)
+                player.bubbles[i][0] -= 1;
+            else
+                player.bubbles[i][0] += 1;
+        }
+
+        if(Math.random() < 1/120){
+            player.bubbles.push([player.x, player.y]);
+            if(player.bubbles.length > 30){
+                player.bubbles.shift();
+            }
+        }
     },
-    render: function(){ /* TODO: ADD DIRECTIONS */
+    render: function(){
         if (player.directions.left === true) {                                                                  // ↓     centering the sprite    ↓
             animate_sprite(pSide, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1 - 7, player.y - viewport.y -1 - 5, 15, 10, false);
         } else if (player.directions.right === true) {
@@ -62,6 +80,11 @@ var player = {
         } else {                                        // ( frame_c / 4 ) % frames ) * 15
             animate_sprite(pIdle, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1 - 7, player.y - viewport.y -1 - 5, 15, 10, player.xv >= 0);
         }
+
+        context.fillStyle = "white";
+        for(var i = 0; i < player.bubbles.length; i++)
+            if(player.bubbles[i][1] >= 50)
+                context.fillRect(player.bubbles[i][0] - viewport.x, player.bubbles[i][1] - viewport.y, 1, 1);
     },
     keyup: function(e){
         switch(e.keyCode){
