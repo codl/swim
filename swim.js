@@ -22,8 +22,7 @@ function step(){
     // render shit to the buffer
     context.fillStyle = "black";
     context.fillRect(0, 0, canvas.width, canvas.height);
-//  map.render();
-//    player.render();
+    map.render();
     render_sprites();
     // write buffer to canvas
     realcontext.drawImage(buffer, 0, 0);
@@ -67,10 +66,10 @@ registeronload(function(){
     // load assets, progress bar?
     // load player here during test.
     player.init();
-//  map.onready = function(){
+    map.onready = function(){
         window.setInterval(step, 1000/60);
-//  }
-//  map.generate();
+    }
+    map.generate();
 })
 
 function sign(i){
