@@ -118,7 +118,7 @@ scenery = {
             }
             if(!done){
                 if(tries > map.height){
-                    console.warning("Giving up on " + filename);
+                    console.warn("Giving up on " + filename);
                     window.setTimeout(scenery.place, 0, count-1);
                 }
                 else if(tries % 1000 === 0){
