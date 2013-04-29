@@ -49,6 +49,24 @@ var map = {
                 map.context.putImageData(img, 0, 0);
                 map.imageData = img;
                 console.log(map.width + "×" + map.height + " map successfully generated. Time taken : " + (new Date() - time));
+
+                // place scenery
+                // TODO
+
+                // place player
+                x = -1; y = -1;
+                progress(100, "Spawning player");
+                while(map.collide(x, y)){
+                    x = Math.floor(Math.random() * map.width);
+                    y = Math.floor(Math.random() * 50) + 50;
+                }
+                player.realx = x;
+                player.realy = y;
+
+                // place viewpoint
+                viewport.x = x - 100;
+                viewport.y = y - 100;
+
                 if(map.onready) map.onready();
             }
         }
