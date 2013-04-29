@@ -1,9 +1,5 @@
 scenery = {
     files: [
-        "art/SHIP1.png",
-        "art/SHIP2.png",
-        "art/SHIP3.png",
-        "art/AIR1.png",
         "art/BRUSH0.png",
         "art/BRUSH1.png",
         "art/BRUSH2.png",
@@ -23,6 +19,10 @@ scenery = {
         "art/ROCK1.png",
         "art/REFUSE0.png",
         "art/REFUSE1.png",
+        "art/SHIP1.png",
+        "art/SHIP2.png",
+        "art/SHIP3.png",
+        "art/AIR1.png",
         "art/SUB0.png" // GET IT?
     ],
     assets: {},
@@ -73,7 +73,6 @@ scenery = {
 
     place: function(count){
         if(count <= 0){
-            console.log("Done placing scenery.");
             map.imageData = map.context.getImageData(0, 0, map.width, map.height);
             if(scenery.onready){
                 var f = scenery.onready;
@@ -83,7 +82,7 @@ scenery = {
             return;
         }
 
-        var filename = scenery.files[Math.floor(Math.random() * scenery.files.length)];
+        var filename = scenery.files[Math.floor(Math.pow(Math.random(), 4) * scenery.files.length)];
 
         progress(98, "Placing scenery: " + filename + "...");
 
