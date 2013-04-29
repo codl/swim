@@ -68,12 +68,20 @@ registeronload(function(){
     sprite_context = sprite_canvas.getContext("2d");
         //temp
     sprite_context.scale(-1, 1);
-    // load assets, progress bar?
+
+    var bgm = document.getElementById("bgm")
+    bgm.addEventListener("ended", bgm.play);
+    window.addEventListener("keypress", function(e){
+        if(e.charCode===109)
+            bgm.muted = !bgm.muted; // toggle mute
+    });
+
     // load player here during test.
     map.onready = function(){
         fish.spawn(700);
         scenery.onready = function(){
             player.init();
+            bgm.play();
             window.setInterval(step, 1000/60);
         }
         scenery.place(70);

@@ -19,3 +19,7 @@ canvas, .nojs {
     font-family: sans-serif;
     cursor: default;
 }
+
+audio {
+    display: none;
+}
