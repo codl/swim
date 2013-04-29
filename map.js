@@ -48,7 +48,7 @@ var map = {
                     floodfill(job[0], job[1]);
             }
             else {
-                if(processed < map.width*map.height/8){ processed = 0; floodfill(x+1, y); return; } // we landed on a tiny island or empty space, try again
+                if(processed < map.width*map.height/8){ processed = 0; window.setTimeout(floodfill, 0, x+1, y); return; } // we landed on a tiny island or empty space, try again
                 map.context.putImageData(img, 0, 0);
                 map.imageData = img;
                 console.log(map.width + "×" + map.height + " map successfully generated. Time taken : " + (new Date() - time));
