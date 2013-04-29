@@ -73,6 +73,7 @@ var map = {
             }
             else {
                 map.context.putImageData(img, 0, 0);
+                map.imageData = img;
                 console.log(map.canvas.width + "×" + map.canvas.height + " map successfully generated. Time taken : " + (new Date() - time));
                 if(map.onready) map.onready();
             }
@@ -81,6 +82,9 @@ var map = {
     },
     render: function(){
         context.drawImage(map.canvas, -viewport.x, -viewport.y);
+    },
+    collide: function(x, y){
+        return map.imageData.data[(x + y*map.canvas.width) * 4 + 1] === 255;
     }
 }
 
