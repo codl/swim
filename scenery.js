@@ -1,6 +1,9 @@
 scenery = {
     files: [
         "art/SHIP1.png",
+        "art/SHIP2.png",
+        "art/SHIP3.png",
+        "art/AIR1.png",
         "art/BRUSH0.png",
         "art/BRUSH1.png",
         "art/BRUSH2.png",
