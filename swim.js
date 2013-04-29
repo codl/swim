@@ -76,7 +76,7 @@ registeronload(function(){
             player.init();
             window.setInterval(step, 1000/60);
         }
-        scenery.place(40);
+        scenery.place(70);
     }
     map.generate();
 })

@@ -18,7 +18,12 @@ scenery = {
         "art/BRUSH11.png",
         "art/BRUSH12.png",
         "art/BRUSH13.png",
-        "art/BRUSH14.png"
+        "art/BRUSH14.png",
+        "art/ROCK0.png",
+        "art/ROCK1.png",
+        "art/REFUSE0.png",
+        "art/REFUSE1.png",
+        "art/SUB0.png" // GET IT?
     ],
     assets: {},
     load: function(filename){
