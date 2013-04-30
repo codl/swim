@@ -23,3 +23,10 @@ canvas, .nojs {
 audio {
     display: none;
 }
+
+.license {
+    font-size: 0.8em;
+    color: #999;
+    margin-bottom: 0;
+}
+.license a { color: #999; }
