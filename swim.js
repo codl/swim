@@ -137,7 +137,6 @@ function animate_sprite(image, sx, sy, swidth, sheight, x, y, width, height, fli
         if (sprite_canvas.width !== width && sprite_canvas.height !== height) {
             sprite_canvas.width = width;
             sprite_canvas.height = height;
-            console.log("changed size of Sprite_canvas.");
         }
         sprite_context.clearRect(-(width), 0, width, height);
         sprite_context.drawImage(image, sx, sy, swidth, sheight, -(swidth), 0, width, height);

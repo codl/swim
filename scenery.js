@@ -89,7 +89,7 @@ scenery = {
 
         var filename = scenery.files[Math.floor(Math.pow(Math.random(), 4) * scenery.files.length)];
 
-        progress(98, "Placing scenery: " + filename + "...");
+        progress(98, "Placing scenery...");
 
         var asset = scenery.assets[filename];
         if(!asset || asset.readyState !== 2){

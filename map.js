@@ -40,7 +40,7 @@ var map = {
             var job = queue.shift() || queue_right.shift();
             if(job){
                 if(processed % 1000 === 0){
-                    progress(linear(rightmost, 0, map.width, 0, 95), "Generating map, " + (queue.length + queue_right.length) + " queued...");
+                    progress(linear(rightmost, 0, map.width, 0, 95), "Generating map...");
                     window.setTimeout(floodfill, 0, job[0], job[1]);
                 }
                 else
@@ -50,7 +50,6 @@ var map = {
                 if(processed < map.width*map.height/8){ processed = 0; window.setTimeout(floodfill, 0, x+1, y); return; } // we landed on a tiny island or empty space, try again
                 map.context.putImageData(img, 0, 0);
                 map.imageData = img;
-                console.log(map.width + "×" + map.height + " map successfully generated. Time taken : " + (new Date() - time));
 
                 // place scenery
                 // TODO
