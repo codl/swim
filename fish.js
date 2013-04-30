@@ -61,8 +61,8 @@ fish.Fish.prototype.step = function(){
             }
         }
         if(neighbour_count != 0){
-            this.xa += ((neighbour_xv / neighbour_count) - this.xv)/2;
-            this.ya += ((neighbour_yv / neighbour_count) - this.yv)/8;
+            this.xa += ((neighbour_xv / neighbour_count) - this.xv)*Math.random();
+            this.ya += ((neighbour_yv / neighbour_count) - this.yv)*Math.random()/4;
         }
     }
     if(this.space_out <= 0){
