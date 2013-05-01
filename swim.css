@@ -30,3 +30,11 @@ audio {
     margin-bottom: 0;
 }
 .license a { color: #999; }
+
+#fpscounter {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: default;
+    color: #666;
+}

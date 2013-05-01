@@ -14,7 +14,11 @@ function linear(i, a1, b1, a2, b2){
     return ((i - a1) * (b2 - a2) / (b1 - a1)) + a2;
 }
 
+var frame_counter = 0;
+var time = new Date() - 0;
 function step(){
+    frame_counter++;
+
     // here goes everything that must execute each frame
     player.step();
     viewport.step();
@@ -31,6 +35,12 @@ function step(){
 
     // write buffer to canvas
     realcontext.drawImage(buffer, 0, 0);
+
+    if(frame_counter % 30 == 0){
+        document.getElementById("fpscounter").innerHTML = Math.floor(30 / (new Date() - time) * 1000);
+        time = new Date() - 0;
+    }
+    window.setTimeout(step, 1000/60);
 }
 
 var canvas, realcontext;
@@ -79,7 +89,8 @@ registeronload(function(){
     player.init();
     scenery.onready = function(){
         bgm.play();
-        window.setInterval(step, 1000/60);
+        step();
+        //window.setInterval(step, 1000/60);
     }
     map.generate();
 })
@@ -116,14 +127,10 @@ var viewport = {
     }
 }
 
-var frame_counter = 0;
 
 function render_sprites() {
     player.render(); // render player.
-
     fish.render();
-
-    frame_counter++;
 }
 
 //context.drawImage(pIdle, (Math.floor(frame_counter / 4) % 8) * 15, 0, 15, 10, player.x - viewport.x - 1, player.y - viewport.y -1, 15, 10);

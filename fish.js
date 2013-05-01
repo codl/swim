@@ -26,7 +26,10 @@ var fish = {
     },
     render: function(){
         for(var i = 0; i < fish.fishes.length; i++){
-            fish.fishes[i].render();
+            if(fish.fishes[i].x > viewport.x - 1 && fish.fishes[i].x < viewport.x + canvas.width + 1 &&
+               fish.fishes[i].y > viewport.y && fish.fishes[i].y < viewport.y + canvas.height)
+                fish.fishes[i].render();
+
         }
     }
 };
@@ -50,7 +53,7 @@ fish.Fish.prototype.step = function(){
     var neighbour_xv = 0;
     var neighbour_yv = 0;
     if(this.follower){
-        for(var i = 0; i < fish.fishes.length; i++){
+        for(var i = Math.floor(Math.random() * 6); i < fish.fishes.length; i+=6){
             if(Math.abs(this.realx - fish.fishes[i].realx) < 50 &&
             Math.abs(this.realy - fish.fishes[i].realy) < 50 &&
             Math.abs(fish.fishes[i].xv) > 0.1 &&
