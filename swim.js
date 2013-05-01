@@ -76,15 +76,10 @@ registeronload(function(){
             bgm.muted = !bgm.muted; // toggle mute
     });
 
-    // load player here during test.
-    map.onready = function(){
-        fish.spawn(700);
-        scenery.onready = function(){
-            player.init();
-            bgm.play();
-            window.setInterval(step, 1000/60);
-        }
-        scenery.place(70);
+    player.init();
+    scenery.onready = function(){
+        bgm.play();
+        window.setInterval(step, 1000/60);
     }
     map.generate();
 })
