@@ -112,13 +112,13 @@ var viewport = {
         viewport.pvx = player.x - viewport.x - canvas.width/2; // find player distance from center of viewpoint
         viewport.pvy = player.y - viewport.y - canvas.height/2;
 
-        if(Math.abs(viewport.pvx) > canvas.width/4){
-            var d = viewport.pvx - sign(viewport.pvx) * canvas.width/4; // distance from edge of scroll zone
+        if(Math.abs(viewport.pvx) > canvas.width/16){
+            var d = viewport.pvx - sign(viewport.pvx) * canvas.width/16; // distance from edge of scroll zone
             window.dx = d;
             viewport.x += 0.05 * d;
         }
-        if(Math.abs(viewport.pvy) > canvas.height/4){
-            var d = viewport.pvy - sign(viewport.pvy) * canvas.height/4; // distance from edge of scroll zone
+        if(Math.abs(viewport.pvy) > canvas.height/16){
+            var d = viewport.pvy - sign(viewport.pvy) * canvas.height/16; // distance from edge of scroll zone
             window.dy = d;
             viewport.y += 0.05 * d;
         }
