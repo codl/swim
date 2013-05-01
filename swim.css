@@ -5,6 +5,8 @@ body {
     font-family: monospace;
 }
 
+a { color: #eee; }
+
 canvas, .nojs {
     background: black;
     border: 1px solid #666;
